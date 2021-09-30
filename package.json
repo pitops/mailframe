@@ -1,0 +1,18 @@
+{
+  "name": "mailframe",
+  "version": "0.0.1",
+  "repository": "git@github.com:pitops/mailframe.git",
+  "author": "Petros Kyriakou <9pitops@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "@packages/*"
+  ],
+  "scripts": {
+  "dev":  "lerna run --stream --parallel tsc:watch"
+},
+  "dependencies": {
+    "lerna": "^4.0.0"
+  }
+
+}
