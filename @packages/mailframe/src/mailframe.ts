@@ -1,25 +1,43 @@
-import fs from 'fs'
-import path from 'path'
-import Mustache from 'mustache'
+import ky from 'ky-universal'
+import { convert } from 'html-to-text'
 
-interface MailFrameOptions {
-  templatesPath: string
+import { MailFrameBase, MailFrameBaseOptions } from './base'
+
+interface SendArguments {
+  from?: string | string[]
+  to: string
+  subject: string
+  variables: any
 }
 
-export class MailFrame {
-  templatesPath: string
+interface MailFrameOptions extends MailFrameBaseOptions {
+  messageRaftUrl: string
+}
 
-  constructor(options: MailFrameOptions) {
-    this.templatesPath = options.templatesPath
+export class MailFrame extends MailFrameBase {
+  client: typeof ky
+
+  constructor({ messageRaftUrl, ...rest }: MailFrameOptions) {
+    super(rest)
+    if (!messageRaftUrl) {
+      throw new Error('MessageRaft URL was not provided')
+    }
+    this.client = ky.extend({
+      prefixUrl: messageRaftUrl,
+      timeout: 15000,
+      retry: {
+        limit: 3,
+        methods: ['post'],
+      },
+    })
   }
 
-  fillTemplateWithValues<T>(templateId: string, values: T) {
-    const file = fs.readFileSync(
-      path.join(process.cwd(), this.templatesPath, `/${templateId}.mf`),
-      {
-        encoding: 'utf-8',
-      }
-    )
-    return Mustache.render(file, values)
+  send<T>(provider: string, templateId: string, { subject, from, to, variables }: SendArguments) {
+    const html = this.fillTemplateWithValues<T>(templateId, variables)
+    const text = convert(html, { wordwrap: 130 })
+
+    return this.client
+      .post(`message/send/${provider}`, { json: { data: { subject, from, to, html, text } } })
+      .json()
   }
 }

@@ -34,6 +34,7 @@
     }
   },
   "devDependencies": {
+    "@types/html-to-text": "^8.0.1",
     "@types/node": "^16.7.4",
     "husky": "^7.0.2",
     "npm-run-all": "^4.1.5",
@@ -45,6 +46,9 @@
   },
   "dependencies": {
     "@types/mustache": "^4.1.2",
+    "html-to-text": "^8.0.0",
+    "ky": "0.25.1",
+    "ky-universal": "^0.8.2",
     "mustache": "^4.2.0"
   }
 }
