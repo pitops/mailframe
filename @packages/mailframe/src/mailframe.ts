@@ -3,7 +3,7 @@ import { convert } from 'html-to-text'
 
 import { MailFrameBase, MailFrameBaseOptions } from './base'
 
-interface SendArguments {
+export interface MailFrameSendArguments {
   from?: string | string[]
   to: string
   subject: string
@@ -32,7 +32,11 @@ export class MailFrame extends MailFrameBase {
     })
   }
 
-  send<T>(provider: string, templateId: string, { subject, from, to, variables }: SendArguments) {
+  send<T>(
+    provider: string,
+    templateId: string,
+    { subject, from, to, variables }: MailFrameSendArguments
+  ) {
     const html = this.fillTemplateWithValues<T>(templateId, variables)
     const text = convert(html, { wordwrap: 130 })
 

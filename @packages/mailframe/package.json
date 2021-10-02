@@ -18,8 +18,8 @@
     "src"
   ],
   "author": "Petros Kyriakou <9pitops@gmail.com>",
-  "main": "dist/main/mailframe.js",
-  "types": "dist/main/mailframe.d.ts",
+  "main": "dist/main/index.js",
+  "types": "dist/main/index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
     "format": "prettier --write \"{src,test}/**/*.ts\"",
