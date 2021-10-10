@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img src="https://i.imgur.com/CSXjuZL.jpg" alt="Messageraft"></a>
+ <img src="https://i.imgur.com/VLr2Gs8.png" alt="Messageraft"></a>
 </p>
 
 <h2 align="center">Mailframe</h3>
